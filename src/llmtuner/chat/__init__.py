@@ -1,1 +1,4 @@
-from llmtuner.chat.stream_chat import ChatModel
+from .chat_model import ChatModel
+
+
+__all__ = ["ChatModel"]

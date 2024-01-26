@@ -1,8 +1,11 @@
-import sys
 import logging
+import sys
 
 
 class LoggerHandler(logging.Handler):
+    r"""
+    Logger handler used in Web UI.
+    """
 
     def __init__(self):
         super().__init__()
@@ -19,19 +22,12 @@ class LoggerHandler(logging.Handler):
         self.log += "\n\n"
 
 
-def reset_logging():
-    r"""
-    Removes basic config of root logger
-    """
-    root = logging.getLogger()
-    list(map(root.removeHandler, root.handlers))
-    list(map(root.removeFilter, root.filters))
-
-
 def get_logger(name: str) -> logging.Logger:
+    r"""
+    Gets a standard logger with a stream hander to stdout.
+    """
     formatter = logging.Formatter(
-        fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-        datefmt="%m/%d/%Y %H:%M:%S"
+        fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"
     )
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
@@ -41,3 +37,12 @@ def get_logger(name: str) -> logging.Logger:
     logger.addHandler(handler)
 
     return logger
+
+
+def reset_logging() -> None:
+    r"""
+    Removes basic config of root logger. (unused in script)
+    """
+    root = logging.getLogger()
+    list(map(root.removeHandler, root.handlers))
+    list(map(root.removeFilter, root.filters))
