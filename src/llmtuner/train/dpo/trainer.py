@@ -60,6 +60,8 @@ class CustomDPOTrainer(DPOTrainer):
             else:
                 self.ref_model = self.accelerator.prepare_model(self.ref_model, evaluation_mode=True)
 
+        self.reference_free = True
+
     def sft_loss(self, chosen_logits: torch.FloatTensor, chosen_labels: torch.LongTensor) -> torch.Tensor:
         r"""
         Computes supervised cross-entropy loss of given labels under the given logits.
