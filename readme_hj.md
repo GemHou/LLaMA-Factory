@@ -1,5 +1,15 @@
+# Install
+
+```bash
+pip install transformers==4.36.2
+pip install peft>=0.7.0
+pip install trl>=0.7.6
+```
+
 # Local 5900X
-## Run(4.2GB)
+
+## Infer(4.2GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --model_name_or_path /home/houjinghp/data/llm/phi-1_5/ \
@@ -7,7 +17,8 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --finetuning_type lora
 ```
 
-## Train(8.5 GB)
+## Train SFT(8.5 GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --stage sft \
@@ -34,7 +45,33 @@ CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --evaluation_strategy epoch
 ```
 
-## Test(4.2GB)
+## Train DPO(XX GB)
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
+    --stage dpo \
+    --do_train \
+    --model_name_or_path path_to_llama_model \
+    --adapter_name_or_path path_to_sft_checkpoint \
+    --create_new_adapter \
+    --dataset comparison_gpt4_en \
+    --template default \
+    --finetuning_type lora \
+    --lora_target q_proj,v_proj \
+    --output_dir path_to_dpo_checkpoint \
+    --per_device_train_batch_size 2 \
+    --gradient_accumulation_steps 4 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 1000 \
+    --learning_rate 1e-5 \
+    --num_train_epochs 1.0 \
+    --plot_loss \
+    --fp16
+```
+
+## Infer(4.2GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --model_name_or_path /home/houjinghp/data/llm/phi-1_5/ \
@@ -44,7 +81,9 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
 ```
 
 # Local 9700K
-## Run(4.2GB)
+
+## Infer(4.2GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --model_name_or_path /home/gemhou/Study/data/phi-1_5_copy/ \
@@ -52,7 +91,8 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --finetuning_type lora
 ```
 
-## Test(4.2GB)
+## Infer(4.2GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --model_name_or_path /home/gemhou/Study/data/phi-1_5_copy/ \
@@ -62,7 +102,9 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
 ```
 
 # Server
-## Run(4.2GB)
+
+## Infer(4.2GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --model_name_or_path /xxx \
@@ -71,6 +113,7 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
 ```
 
 ## Train(more than 5 GB)
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --stage sft \
