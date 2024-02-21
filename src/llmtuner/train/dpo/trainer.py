@@ -60,7 +60,7 @@ class CustomDPOTrainer(DPOTrainer):
             else:
                 self.ref_model = self.accelerator.prepare_model(self.ref_model, evaluation_mode=True)
 
-        self.reference_free = True
+        self.reference_free = False
 
     def sft_loss(self, chosen_logits: torch.FloatTensor, chosen_labels: torch.LongTensor) -> torch.Tensor:
         r"""

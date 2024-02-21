@@ -27,7 +27,7 @@ CUDA_VISIBLE_DEVICES=0 python src/cli_demo.py \
     --checkpoint_dir ./data/sft_checkpoint/drive_1109
 ```
 
-### Train 
+### Train
 
 #### SFT(5.2 GB)
 
@@ -59,8 +59,6 @@ CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
 
 #### DPO(XX GB)
 
---adapter_name_or_path path_to_sft_checkpoint \
-
 ```bash
 CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --stage dpo \
@@ -71,7 +69,9 @@ CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --template default \
     --finetuning_type lora \
     --lora_target Wqkv \
+    --lora_rank 8 \
     --output_dir ./data/dpo_checkpoint/drive_0221 \
+    --overwrite_cache \
     --per_device_train_batch_size 1 \
     --gradient_accumulation_steps 1 \
     --lr_scheduler_type cosine \
@@ -83,6 +83,7 @@ CUDA_VISIBLE_DEVICES=0 python src/train_bash.py \
     --fp16
 ```
 
+--adapter_name_or_path path_to_sft_checkpoint \
 
 ## Local 9700K
 
